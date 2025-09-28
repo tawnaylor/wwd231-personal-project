@@ -19,4 +19,4 @@ function setParkInfoLinks(data) {
 
 setHeaderFooter(parkData);
 setParkIntro(parkData);
-setParkInfoLinks(Array.isArray(parkInfoLinks) ? parkInfoLinks : []);
+setParkInfoLinks(parkInfoLinks);
