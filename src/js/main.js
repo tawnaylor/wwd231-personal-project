@@ -1,26 +1,14 @@
 import { getParkData } from "./parkService.mjs";
-
-// replace synchronous call with async initialization
-async function init() {
-	try {
-		const parkData = await getParkData();
-		setHeaderInfo(parkData);
-		// ...existing startup code that depends on parkData...
-	} catch (err) {
-		console.error("Failed to load park data:", err);
-		// ...handle error UI/flow if needed...
-	}
-}
-
-// define or ensure setHeaderInfo exists; merge this with your existing implementation
 function setHeaderInfo(data) {
-	// ...existing code that updates the header using `data`...
-	// Example minimal-safe implementation:
-	if (!data) return;
-	// update DOM or perform other actions with data
+  // insert data into disclaimer section
+  const disclaimer = document.querySelector(".disclaimer > a");
+  disclaimer.href = data.url;
+  disclaimer.innerHTML = data.fullName;
+  // update the title of the site. Notice that we can select things in the head just like in the body with querySelector
+  document.querySelector("head > title").textContent = data.fullName;
+  // set the banner image
+  document.querySelector(".hero-banner > img").src = data.images[0].url;
+  // use the template function above to set the rest of the park specific info in the header
+  document.querySelector(".hero-banner__content").innerHTML =
+    parkInfoTemplate(data);
 }
-
-// start app
-init();
-
-// ...existing code...
