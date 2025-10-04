@@ -8,56 +8,9 @@
 body {
   margin: 0;
   font-family: var(--font-base);
-  color: var(--nps-dark);
   background-color: var(--nps-tan);
-  font-size: 1.1rem;
-}
-
-a {
-  color: var(--nps-green);
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
-
-.skip-links a {
-  position: absolute;
-  left: -999px;
-  top: auto;
-}
-.skip-links a:focus {
-  left: 1rem;
-  top: 1rem;
-  background: white;
-  padding: 0.5rem;
-  z-index: 100;
-}
-
-.global-header {
-  background-color: var(--nps-green);
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-}
-
-.global-header .logo {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.global-nav a {
-  color: white;
-  margin-left: 1rem;
-}
-
-.hero-banner {
-  position: relative;
-  text-align: center;
-  color: white;
+  color: var(--nps-dark);
+  line-height: 1.6;
 }
 
 .hero-banner__image {
@@ -66,33 +19,40 @@ a:hover {
   object-fit: cover;
 }
 
-.hero-banner__info {
-  position: absolute;
-  bottom: 2rem;
-  left: 2rem;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 1rem;
+.intro {
+  padding: 2rem;
+  text-align: center;
+}
+
+.info {
+  display: grid;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.media-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
   border-radius: 0.5rem;
+  overflow: hidden;
+  background: white;
 }
 
-.hero-banner__title {
-  font-size: 2rem;
-  color: white;
+.media-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
 }
 
-.hero-banner__subtitle {
-  font-size: 1.2rem;
+.media-card__content {
+  padding: 1rem;
 }
 
 footer {
-  background: var(--nps-green);
+  background-image: url("https://www.transparenttextures.com/patterns/topography.png");
+  background-color: var(--nps-green);
   color: white;
+  padding: 2rem;
   text-align: center;
-  padding: 1rem;
-  margin-top: 2rem;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
 }
