@@ -1,0 +1,7 @@
+/* partials/global.css */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background-color: #f5f5f5;
+  color: #333;
+}
