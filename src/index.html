@@ -3,43 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Yellowstone National Park</title>
-    <link rel="stylesheet" href="./style.css" />
+    <title>NPS Park Page</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
-    <p class="disclaimer">
-      <a href="#">National Park Service</a>
-    </p>
-
-    <div class="skip-links" aria-label="short-cut links" role="navigation">
-      <a href="#main">Skip to main content</a>
-    </div>
-
-    <header>
-      <!-- Global Header -->
-      <section class="global-header">
-        <div class="logo">
-          <svg class="icon">
-            <use xlink:href="/images/sprite.symbol.svg#nps-arrowhead"></use>
-          </svg>
-          <h1>National Park Service</h1>
-        </div>
-      </section>
-
-      <!-- Park Header -->
-      <section id="park-header" class="hero-banner">
-        <img class="hero-banner__image" alt="Park banner" />
-        <div class="hero-banner__content"></div>
-      </section>
+    <header class="hero-banner">
+      <div class="disclaimer">
+        <a href="#">National Park Service</a>
+      </div>
+      <img src="" alt="Park Banner" />
+      <div class="hero-banner__content"></div>
     </header>
 
-    <main id="main">
+    <main>
       <section class="intro"></section>
       <section class="info"></section>
     </main>
 
     <footer id="park-footer"></footer>
 
-    <script type="module" src="./js/main.js"></script>
+    <script type="module" src="main.js"></script>
   </body>
 </html>

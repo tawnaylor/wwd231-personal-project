@@ -1,22 +1,29 @@
-:root {
-  --nps-green: #556b2f;
-  --nps-tan: #f4f1ee;
-  --nps-dark: #333;
-  --font-base: "Helvetica Neue", Arial, sans-serif;
-}
-
 body {
   margin: 0;
-  font-family: var(--font-base);
-  background-color: var(--nps-tan);
-  color: var(--nps-dark);
-  line-height: 1.6;
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+  color: #222;
 }
 
-.hero-banner__image {
+.hero-banner {
+  position: relative;
+  text-align: center;
+}
+
+.hero-banner img {
   width: 100%;
-  height: 40vh;
-  object-fit: cover;
+  height: auto;
+}
+
+.hero-banner__content {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  border-radius: 8px;
 }
 
 .intro {
@@ -26,33 +33,36 @@ body {
 
 .info {
   display: grid;
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
   padding: 2rem;
 }
 
 .media-card {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #ddd;
-  border-radius: 0.5rem;
-  overflow: hidden;
   background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.media-card img {
+.media-card__img {
   width: 100%;
   height: 200px;
   object-fit: cover;
 }
 
-.media-card__content {
-  padding: 1rem;
+.media-card__title {
+  margin: 0.5rem;
 }
 
-footer {
-  background-image: url("https://www.transparenttextures.com/patterns/topography.png");
-  background-color: var(--nps-green);
+.media-card p {
+  padding: 0 1rem 1rem;
+}
+
+#park-footer {
+  background-image: url('footer-topo-pattern.png'); /* replace with topo image path */
+  background-size: cover;
   color: white;
-  padding: 2rem;
   text-align: center;
+  padding: 2rem;
 }
