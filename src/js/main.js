@@ -19,9 +19,20 @@ function setParkInfoLinks(data) {
 }
 
 async function init() {
-  const parkData = await getParkData();
-  setHeaderFooter(parkData);
-  setParkIntro(parkData);
-  setParkInfoLinks(parkInfoLinks);
+  try {
+    const parkData = await getParkData();
+    if (!parkData) throw new Error("No park data returned");
+
+    if (typeof setHeaderFooter === "function") setHeaderFooter(parkData);
+    setParkIntro(parkData);
+
+    const images = Array.isArray(parkData.images) ? parkData.images : [];
+    const links = getInfoLinks(images);
+    setParkInfoLinks(links);
+  } catch (err) {
+    console.error("Initialization error:", err);
+    // ...optional UI fallback...
+  }
 }
+
 init();

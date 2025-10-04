@@ -3,27 +3,6 @@
 const baseUrl = "https://developer.nps.gov/api/v1/";
 const apiKey = import.meta.env.VITE_NPS_API_KEY;
 
-export async function getParkData() {
-  const options = {
-    method: "GET",
-    headers: {
-      "X-Api-Key": apiKey
-    }
-  };
-  
-  let data = {};
-  const response = await fetch(baseUrl + "parks" + "?parkCode=yell", options);
-  
-  if (response.ok) {
-    data = await response.json();
-  } else {
-    throw new Error("response not ok");
-  }
-
-  return data;
-}
-
-
 // fallback local park data
 const park = {
   id: "F58C6D24-8D10-4573-9826-65D42B8B83AD",
@@ -256,7 +235,6 @@ export function getInfoLinks(images = []) {
 export async function getParkData() {
   try {
     const data = await getJson("parks?parkCode=yell");
-    // API returns object with data array
     return data && data.data && data.data[0] ? data.data[0] : park;
   } catch (err) {
     console.warn("getParkData failed, using local park fallback:", err);
