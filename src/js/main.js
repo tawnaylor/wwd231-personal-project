@@ -1,38 +1,30 @@
-import { getParkData, getInfoLinks } from "./parkService.mjs";
-import setHeaderFooter from "./setHeaderFooter.mjs";
-import { mediaCardTemplate } from "./templates.mjs";
+import { getParkData } from "./parkService.mjs";
 
-function setParkIntro(data) {
-  const introEl = document.querySelector(".intro");
-  if (!introEl || !data) return;
-  const title = data.fullName || "";
-  const desc = data.description || "";
-  introEl.innerHTML = `<h1>${title}</h1><p>${desc}</p>`;
+const parkData = getParkData();
+
+// Update disclaimer link
+const disclaimer = document.querySelector(".disclaimer a");
+disclaimer.href = parkData.url;
+disclaimer.innerHTML = parkData.fullName;
+
+// Update page title
+document.title = parkData.fullName;
+
+// Update hero image
+const heroImage = document.querySelector(".hero-banner__image");
+heroImage.src = parkData.images[0].url;
+heroImage.alt = parkData.images[0].altText;
+
+// Update park info (name, designation, states)
+const heroInfo = document.querySelector(".hero-banner__info");
+heroInfo.innerHTML = parkInfoTemplate(parkData);
+
+function parkInfoTemplate(info) {
+  return `
+    <a href="${info.url}" class="hero-banner__title">${info.name}</a>
+    <p class="hero-banner__subtitle">
+      <span>${info.designation}</span> |
+      <span>${info.states}</span>
+    </p>
+  `;
 }
-
-function setParkInfoLinks(data) {
-  const infoEl = document.querySelector(".info");
-  if (!infoEl || !Array.isArray(data) || data.length === 0) return;
-  // map to html using template; mediaCardTemplate should handle missing fields
-  const html = data.map(mediaCardTemplate);
-  infoEl.insertAdjacentHTML("afterbegin", html.join(""));
-}
-
-async function init() {
-  try {
-    const parkData = await getParkData();
-    if (!parkData) throw new Error("No park data returned");
-
-    if (typeof setHeaderFooter === "function") setHeaderFooter(parkData);
-    setParkIntro(parkData);
-
-    const images = Array.isArray(parkData.images) ? parkData.images : [];
-    const links = getInfoLinks(images);
-    setParkInfoLinks(links);
-  } catch (err) {
-    console.error("Initialization error:", err);
-    // ...optional UI fallback...
-  }
-}
-
-init();
