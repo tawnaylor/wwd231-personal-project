@@ -16,12 +16,16 @@ function setParkInfoLinks(data) {
   infoEl.insertAdjacentHTML("afterbegin", html.join(""));
 }
 
+// main.js
+import { getParkData } from "./parkService.mjs";
+import { setHeaderFooter, setParkIntro, setParkInfoLinks } from "./utilities.mjs"; // example if you have these helpers
+
 async function init() {
-  const parkData = await getParkData();
-  const links = getInfoLinks(parkData.images);
+  const parkData = await getParkData("yell"); // change to your desired park code (e.g., glac)
+  
   setHeaderFooter(parkData);
   setParkIntro(parkData);
-  setParkInfoLinks(links);
+  setParkInfoLinks(parkData);
 }
 
 init();
