@@ -1,18 +1,7 @@
 const baseUrl = "https://developer.nps.gov/api/v1/";
 const apiKey = import.meta.env.VITE_NPS_API_KEY;
-export async function getParkData() {
-  const options = {
-    method: "GET",
-    headers: { "X-Api-Key": apiKey }
-  };
-  let data = {};
-  const response = await fetch(baseUrl + "parks" + "?parkCode=yell", options);
-  if (response.ok) {
-    data = await response.json();
-  } else throw new Error("response not ok");
-  return data;
-}
 
+// fallback local park data
 const park = {
   id: "F58C6D24-8D10-4573-9826-65D42B8B83AD",
   url: "https://www.nps.gov/yell/index.htm",
@@ -193,30 +182,28 @@ const park = {
   name: "Yellowstone",
   designation: "National Park"
 };
+
 const parkInfoLinks = [
   {
     name: "Current Conditions &#x203A;",
     link: "conditions.html",
-    image: park.images[2].url,
+    image: park.images[2] && park.images[2].url,
     description:
       "See what conditions to expect in the park before leaving on your trip!"
   },
   {
     name: "Fees and Passes &#x203A;",
     link: "fees.html",
-    image: park.images[3].url,
+    image: park.images[3] && park.images[3].url,
     description: "Learn about the fees and passes that are available."
   },
   {
     name: "Visitor Centers &#x203A;",
     link: "visitor_centers.html",
-    image: park.images[9].url,
+    image: park.images[9] && park.images[9].url,
     description: "Learn about the visitor centers in the park."
   }
 ];
-
-const baseUrl = "https://developer.nps.gov/api/v1/";
-const apiKey = import.meta.env.VITE_NPS_API_KEY;
 
 async function getJson(url) {
   const options = {
@@ -225,24 +212,31 @@ async function getJson(url) {
       "X-Api-Key": apiKey
     }
   };
-  let data = {};
   const response = await fetch(baseUrl + url, options);
-  if (response.ok) {
-    data = await response.json();
-  } else throw new Error("response not ok");
-  return data;
+  if (!response.ok) throw new Error("Network response was not ok");
+  return response.json();
 }
 
-export function getInfoLinks(data) {
-  // Why index + 2 below? no real reason. we don't want index 0 since that is the one we used for the banner...I decided to skip an image.
-  const withUpdatedImages = parkInfoLinks.map((item, index) => {
-    item.image = data[index + 2].url;
-    return item;
+export function getInfoLinks(images = []) {
+  // return new array (do not mutate parkInfoLinks), use images safely
+  return parkInfoLinks.map((item, index) => {
+    const imageUrl = images[index + 2] && images[index + 2].url;
+    return {
+      name: item.name,
+      link: item.link,
+      image: imageUrl || item.image || "",
+      description: item.description
+    };
   });
-  return withUpdatedImages;
 }
 
 export async function getParkData() {
-  const parkData = await getJson("parks?parkCode=yell");
-  return parkData.data[0];
+  try {
+    const data = await getJson("parks?parkCode=yell");
+    // API returns object with data array
+    return data && data.data && data.data[0] ? data.data[0] : park;
+  } catch (err) {
+    console.warn("getParkData failed, using local park fallback:", err);
+    return park;
+  }
 }

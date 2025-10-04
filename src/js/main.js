@@ -4,24 +4,33 @@ import { mediaCardTemplate } from "./templates.mjs";
 
 function setParkIntro(data) {
   const introEl = document.querySelector(".intro");
-  introEl.innerHTML = `<h1>${data.fullName}</h1>
-  <p>${data.description}</p>`;
+  if (!introEl || !data) return;
+  const title = data.fullName || "";
+  const desc = data.description || "";
+  introEl.innerHTML = `<h1>${title}</h1><p>${desc}</p>`;
 }
 
 function setParkInfoLinks(data) {
   const infoEl = document.querySelector(".info");
-  // we have multiple links to build...so we map to transform the array of objects into an array of HTML strings.
+  if (!infoEl || !Array.isArray(data) || data.length === 0) return;
+  // map to html using template; mediaCardTemplate should handle missing fields
   const html = data.map(mediaCardTemplate);
-  // join the array of strings into one string and insert it into the section
   infoEl.insertAdjacentHTML("afterbegin", html.join(""));
 }
 
 async function init() {
-  const parkData = await getParkData();
-  const links = getInfoLinks(parkData.images);
-  setHeaderFooter(parkData);
-  setParkIntro(parkData);
-  setParkInfoLinks(links);
+  try {
+    const parkData = await getParkData();
+    if (!parkData) throw new Error("No park data returned");
+    const images = Array.isArray(parkData.images) ? parkData.images : [];
+    const links = getInfoLinks(images);
+    setHeaderFooter(parkData);
+    setParkIntro(parkData);
+    setParkInfoLinks(links);
+  } catch (err) {
+    console.error("Initialization error:", err);
+    // optional: render minimal fallback UI or show an error message
+  }
 }
 
 init();
