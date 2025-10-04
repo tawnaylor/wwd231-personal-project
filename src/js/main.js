@@ -24,5 +24,5 @@ async function init() {
   setParkIntro(parkData);
   setParkInfoLinks(links);
 }
-
+return data.data[0];
 init();
