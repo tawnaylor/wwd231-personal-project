@@ -17,20 +17,12 @@ function setParkInfoLinks(data) {
   const html = data.map(mediaCardTemplate);
   infoEl.insertAdjacentHTML("afterbegin", html.join(""));
 }
-
 async function init() {
-  try {
-    const parkData = await getParkData();
-    if (!parkData) throw new Error("No park data returned");
-    const images = Array.isArray(parkData.images) ? parkData.images : [];
-    const links = getInfoLinks(images);
-    setHeaderFooter(parkData);
-    setParkIntro(parkData);
-    setParkInfoLinks(links);
-  } catch (err) {
-    console.error("Initialization error:", err);
-    // optional: render minimal fallback UI or show an error message
-  }
+  const parkData = await getParkData();
+  const links = getInfoLinks(parkData.images);
+  setHeaderFooter(parkData);
+  setParkIntro(parkData);
+  setParkInfoLinks(links);
 }
 
 init();
