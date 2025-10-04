@@ -1,5 +1,28 @@
+// parkService.mjs
+
 const baseUrl = "https://developer.nps.gov/api/v1/";
 const apiKey = import.meta.env.VITE_NPS_API_KEY;
+
+export async function getParkData() {
+  const options = {
+    method: "GET",
+    headers: {
+      "X-Api-Key": apiKey
+    }
+  };
+  
+  let data = {};
+  const response = await fetch(baseUrl + "parks" + "?parkCode=yell", options);
+  
+  if (response.ok) {
+    data = await response.json();
+  } else {
+    throw new Error("response not ok");
+  }
+
+  return data;
+}
+
 
 // fallback local park data
 const park = {
